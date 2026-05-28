@@ -1,5 +1,5 @@
 category,source_name,data_type,frequency,access_method,url_or_note,status
-import,Korea Customs Service,Green bean import volume/value by HS code,monthly,API or manual download,HS 090111 coffee not roasted not decaffeinated,pending
+import,Korea Customs Service OpenAPI,Green bean import volume/value by HS code and country (HS 090111),monthly,API (data.go.kr),getNitemtradeList - strtYymm/endYymm/hsSgn; XML; impWgt(kg)/impDlr(USD),done
 price,International Coffee Organization,ICO Composite Indicator Price and coffee group prices,daily/monthly,PDF/manual extraction,ICO Coffee Market Report and I-CIP PDF,pending
 fx,Bank of Korea ECOS,USD/KRW exchange rate,daily/monthly,API or manual download,BOK ECOS Open API,pending
 origin_risk,ICO/Reuters/industry news,Origin and supply risk,weekly/monthly,manual research,Brazil Vietnam Colombia Ethiopia weather/export/logistics issues,pending
