@@ -60,3 +60,39 @@
 **Next action (Day 4):** Clean/validate the raw data in a notebook (dedupe, sanity-check totals vs 합계 row) and start the price (ICO) source.
 
 ---
+
+## Day 4 — Import Data Validation & Trend Analysis
+
+**Goal:** Validate the raw import dataset and produce the analysis behind report Section 2.
+
+**Completed (part 1 — import analysis):**
+- Installed matplotlib + ipykernel (notebook tooling).
+- Validation passed: 1,082 rows / 28 months, **0 duplicates, 0 negatives, 0 missing**, 33–47 countries/month.
+- Cross-check vs API 합계 row: 2024-01 country-sum 16,411,523 kg ≈ API total 16,411,521 kg (diff 2 kg) → consistent.
+- Created notebook `notebooks/01_import_validation_and_trend.ipynb` (validation + trend + origin charts).
+  - Written valid but **unexecuted** — run "Run All" in VSCode to render charts (nbclient kernel launch fails on this Windows setup).
+- Created processed datasets:
+  - `data/processed/monthly_import_summary.csv` (28 months: volume, value, unit price, #countries)
+  - `data/processed/origin_summary.csv` (85 origin rows with share %)
+
+**Key insight (feeds Section 2 & 3):**
+- Import **volume** is roughly flat (~12–16k tons/month), but **avg unit price ~ $3.9/kg (2024-01) → ~$7/kg (2026 Q1)**.
+- → Rising import *value* is **price-driven, not volume-driven**. Directly ties to international price trend (Section 3).
+- Origin concentration: top 4 (Brazil 33.9%, Vietnam 16.7%, Colombia 16.5%, Ethiopia 12.2%) ≈ **79%** of volume → supply-risk focus (Section 5).
+
+**Completed (part 2 — international price + cross-check):**
+- Source decision: **FRED first** (free, no key, monthly, automatable), ICO kept as later authoritative cross-reference.
+- Created `scripts/fetch_prices.py` — pulls FRED `PCOFFOTMUSDM` (Arabica Other Milds) + `PCOFFROBUSDM` (Robusta),
+  converts US cents/lb → USD/kg (×0.0220462) for direct comparison with import unit price.
+- Created `data/raw/coffee_prices_fred_2024_2026.csv` (27 months, 2024-01 → 2026-03).
+- Created `data/processed/price_vs_import_unitprice.csv` (import unit price merged with world prices).
+- Created notebook `notebooks/02_price_trend_and_crosscheck.ipynb` (unexecuted; Run All in VSCode).
+
+**Key insight (Section 3):**
+- Korea import unit price correlation: **Arabica 0.87**, Robusta 0.26 → import cost is **arabica-driven**.
+- Import price sits ~$0.93/kg below Arabica (cheaper Robusta/Brazilian-naturals blend); converges to Arabica by 2026-03 ($7.40 vs $7.37/kg).
+- → The ~2x rise in import unit price is **explained by the world arabica price surge (exogenous cost shock)**, not a domestic sourcing change → feeds F&B cost pressure (Section 6).
+
+**Next action:** Draft report Section 2 + 3 prose from these processed datasets; later add ICO I-CIP as authoritative cross-check; then FX (Section 4).
+
+---
