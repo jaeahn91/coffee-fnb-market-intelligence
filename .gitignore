@@ -225,3 +225,6 @@ __marimo__/
 
 # Private raw data
 data/raw/private/
+
+# Generated figures (regenerable from notebooks; report uses reports/figures/)
+outputs/
