@@ -96,3 +96,31 @@
 **Next action:** Draft report Section 2 + 3 prose from these processed datasets; later add ICO I-CIP as authoritative cross-check; then FX (Section 4).
 
 ---
+
+## Day 5 — Report Drafting (Sec 2·3·5), Critical Review & Origin Deep-dive
+
+**Goal:** Turn the processed datasets into report prose, with a critical pass to avoid overstated interpretation.
+
+**Completed (part 1 — draft + editorial review):**
+- Set up local `.venv` + Jupyter/nbconvert; executed both notebooks (charts now embedded).
+- Exported charts to PNG and placed copies in `reports/figures/` (relative path renders in VSCode preview & GitHub).
+- Drafted report **Section 2 (Import Trend)** and **Section 3 (Price / Cross-check)** prose.
+- **Critical review (editor role)** — stress-tested claims against data and corrected three overstatements:
+  - **Correlation:** level corr 0.87 vs **differenced corr 0.08** → reframed as *co-trend, not short-term causation* (spurious-correlation caveat added).
+  - **Value growth:** single-month endpoint +47% is fragile → shown as range **+47~65%** (3-month-avg basis).
+  - **Blended unit price** conflates price with origin mix (Brazil share 40%→30%) → noted as confounder; "주로 가격, 일부 구성 변화".
+
+**Completed (part 2 — origin deep-dive → Section 5):**
+- Investigated a field rumor ("Ethiopia new crop not arriving in 2026 Q1; pre-contracted stock held").
+- **Data check:** ET volume never zero; 2026 Jan–Apr total **+13% YoY**; monthly YoY noisy (Feb −25%, Mar +131%) → no trend decline. ET **price premium vs basket** compressed 2024→25, then **rebounded +$1.07 in 2026-04** (watch-item).
+- **Conclusion:** rumor not visible at HS090111 granularity (stock vs flow; no harvest-year field) — data and rumor both can be true.
+- **News cross-check** (algrano, Crop to Cup): washed-coffee shortage (40-45%→~20%), first container arrived **Mar 2026** (shifted from Jan), cherry price **$0.45→$1.51/kg (3x)**, pre-contracting & sold-out early containers, East-Africa shipping disruption → rumor explained.
+- Wrote **Section 5 (Origin & Supply Risk)** + supporting note `docs/origin_notes_ethiopia_2026q1.md`.
+
+**Key insight:** Aggregate import volume being flat does **not** mean supply is safe — quality/season-level disruptions (washed new crop) surface late and weakly in totals. Triangulation **data + news** is what turns a number into intelligence.
+
+**Housekeeping:** `.gitignore` += `outputs/` (regenerable). `.venv`/`.env` confirmed ignored.
+
+**Next action:** Section 7 Watchpoint — track whether ET premium persists in May data. Then FX (Section 4: USD/KRW → 원화 원가, "이중 비용 압박"). ICO I-CIP as authoritative price cross-check later.
+
+---
