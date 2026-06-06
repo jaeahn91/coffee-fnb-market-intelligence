@@ -228,3 +228,7 @@ data/raw/private/
 
 # Generated figures (regenerable from notebooks; report uses reports/figures/)
 outputs/
+
+# bkit plugin scratch state (auto-regenerated each session)
+docs/.bkit-memory.json
+docs/.pdca-status.json
