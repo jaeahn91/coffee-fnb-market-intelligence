@@ -58,7 +58,6 @@ coffee-fnb-market-intelligence/
 ├── data/          # 수집한 원시 데이터 (CSV 등)
 ├── notebooks/     # 데이터 정리 및 분석 노트북
 ├── reports/       # 완성된 월간 리포트 (Markdown)
-├── prompts/       # 재사용 프롬프트 모음
 └── docs/          # 도메인 학습 노트, 참고 자료
 ```
 
