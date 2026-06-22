@@ -18,6 +18,7 @@ Usage:
 
 import requests
 import pandas as pd
+from io import StringIO
 from pathlib import Path
 
 SERIES = {
@@ -32,7 +33,9 @@ USC_LB_TO_USD_KG = 0.0220462
 
 def fetch_series(sid: str) -> pd.Series:
     url = FRED_CSV.format(sid=sid)
-    df = pd.read_csv(url)
+    resp = requests.get(url, timeout=20)
+    resp.raise_for_status()
+    df = pd.read_csv(StringIO(resp.text))
     df.columns = ["date", "value"]
     df["date"] = pd.to_datetime(df["date"])
     df["value"] = pd.to_numeric(df["value"], errors="coerce")

@@ -177,3 +177,24 @@
 **Next action (v1 / next cycle):** (1) Collect domestic F&B 1차 data to convert §6 hypotheses → evidence; (2) add ICO I-CIP + 한국은행 고시환율 authoritative cross-checks; (3) refresh with 2026-05 data and test §7 triggers (ET premium ≥+$0.8? FX-offset persists? volume <13k톤?). Optional: a `git` commit of the v0 milestone.
 
 ---
+
+## Day 7 — 2026-05 Data Refresh & §7 Trigger Settlement
+
+**Goal:** Execute v1 item (3) — refresh all raw series with 2026-05 data and settle the three confirmable §7 watch-item triggers (A-1 ET premium, A-2 FX-offset, A-3 volume slowdown).
+
+**Completed (data refresh):**
+- Re-ran `scripts/fetch_imports.py` → import CSV now **1,126 rows** (added 2026-05, +44 rows). Integrity re-checked: git diff **+44/-0** (no past rows altered), **0 dupes / 0 nulls / 0 negatives**. (commit `a208b95`)
+- Re-ran `scripts/fetch_prices.py` → FRED arabica/robusta extended to 2026-05.
+  - **Bug fix:** `fetch_prices.py` still used `pd.read_csv(url)` (urllib path → macOS SSL `CERTIFICATE_VERIFY_FAILED`). Switched to `requests.get` + `StringIO` — the same certifi fix Day 6 applied to `fetch_fx.py` but missed here.
+- FX series (`fetch_fx.py`) already through 2026-06 (June partial, 5 obs); no refetch needed.
+
+**§7 triggers — all three settled (trigger thresholds from Day 6 §7):**
+- **A-1 ET premium (≥ +$0.8/kg):** 2026-05 = **+$1.03/kg** (ET $8.10 vs basket $7.07; ET volume 1,610톤, +6%). Well above threshold for a **second consecutive month** → April's +$1.07 was **not noise**; supply-tightness signal confirmed. Recorded in `docs/origin_notes_ethiopia_2026q1.md` (commit `3cac91f`). Caveat: May may be provisional; HS090111 blended unit price = *direction-consistent* signal, not proof of washed shortage.
+- **A-3 volume slowdown (< 13,000톤/월):** 2026-05 = **11,412톤 < 13,000** → triggered. 2026 avg **11,891톤/월** vs 2024 14,112 / 2025 13,952; April's 13,610 was an **isolated bounce**, not a trend reversal → slowdown **reinforced**.
+- **A-2 FX-offset persistence (USD/KRW ≥ 1,450 & 원가 > 10,500원/kg):** From the 2025-05 USD-price peak to 2026-05 — arabica **−20.1%**, FX **+7.4%**, won cost **−4.8%**. May: arabica $7.00, import unit price $7.07, FX 1,490.92, **won cost 10,542원/kg** (just above 10,500 threshold; April was 10,178, below). Both conditions met → **FX still absorbing the global price relief**; won cost stays rigid/elevated. June FX 1,526 (partial) → no easing in sight.
+
+**Key insight:** All three confirmable triggers fired in the **same direction as the v0 hypotheses** — this is the watch-item framework *working as designed* (falsifiable thresholds → next-month data settles them, not "keep monitoring"). The story holds one month out: tight ET supply, slowing volume, and an FX-locked won cost that denies importers the world price decline.
+
+**Next action (v1, remaining):** (1) Collect domestic F&B 1차 data (CPI 외식 커피, 프랜차이즈 가격) to convert §6 hypotheses → evidence; (2) add ICO I-CIP + 한국은행 고시환율 authoritative cross-checks (§7 group C). Optional: regenerate processed CSVs + re-run notebooks (still April-based) and roll a 2026-06 report once that month's data closes.
+
+---
