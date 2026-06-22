@@ -198,3 +198,35 @@
 **Next action (v1, remaining):** (1) Collect domestic F&B 1차 data (CPI 외식 커피, 프랜차이즈 가격) to convert §6 hypotheses → evidence; (2) add ICO I-CIP + 한국은행 고시환율 authoritative cross-checks (§7 group C). Optional: regenerate processed CSVs + re-run notebooks (still April-based) and roll a 2026-06 report once that month's data closes.
 
 ---
+
+## Day 8 — PLAN: Domestic F&B 1차 Data Collection (→ §6 evidence)
+
+> **Status: PLAN only — nothing collected yet.** This entry scopes v1 item (1) before any fetch.
+
+**Goal:** Pull *domestic* primary data so Section 6 (Korean F&B Implications) can move from **hypothesis → evidence**. Today §6 is built on a wholesale→per-cup *mechanism* (green bean ~+100원/잔, ~7% of a 1,500원 저가 아메리카노 vs ~2% premium) with **no Korean retail/CPI data** behind it.
+
+**Why now:** §2~§5 are import/price/FX/origin — all *upstream* (수입 단가까지). §6 is the only section claiming a *domestic* consequence, yet it's the least evidenced. Closing this gap is the single biggest credibility upgrade left in v1.
+
+**The question this data must settle (falsifiable, BA framing):**
+- Did the upstream cost shock (원화 원가 ~2배) **actually pass through** to Korean retail coffee prices — and if so, **how much and where** (저가 vs 프리미엄)?
+- Three outcomes, each meaningful: (a) retail rose ~in step → pass-through high; (b) retail flat → margin absorbed (저가 체인 마진 압박 = §7 watch); (c) lagged → timing story.
+
+**Target data (candidates — sources to VERIFY before trusting):**
+1. **CPI 외식 커피 / 가공식품 커피** — KOSIS (통계청 국가통계포털). 외식 부문 '커피(외식)' 및 가공식품 '커피' 지수, 월별, 2024-01~. → retail price *trend* vs our wholesale cost trend (the core pass-through test).
+2. **프랜차이즈 메뉴 가격** — 저가(예: 메가/컴포즈 류), 중가(스타벅스 류), 시점별 아메리카노 표시가격. 보도자료·기사·공시 기반 (브랜드별 1차 수집은 노이즈/시점 주의). → §6의 가격대 가정(1,500원 등) 실측 검증.
+3. **(선택) 한국은행/통계청 생산자물가(PPI) 커피 가공품** — 도매·가공 단계 물가, 수입단가와 retail 사이 중간 레이어.
+
+**Acceptance (what upgrades §6 to "evidence"):**
+- At least **CPI 외식 커피 월별 시계열 (2024~2026)** ingested as a raw CSV (same pipeline shape as other `data/raw/*`), with a source row in `source_tracker.csv`.
+- One cross-check chart: **수입 원화 원가 vs CPI 외식 커피** (index both to 2024-01=100) → lead/lag & pass-through 정도를 *눈으로* 확인.
+- §6 prose updated: replace ≥1 hypothesis sentence with a data-backed one (or explicitly confirm "전가 약함 = 마진 흡수" if that's what the data shows).
+
+**Risks / open questions (decide before/while collecting):**
+- **Granularity gap (다시 §5의 교훈):** CPI '외식 커피'는 집계라 저가/프리미엄 분해가 안 됨 → 프랜차이즈 표시가로 보강하되 *예시*임을 명시.
+- **전가 시차:** retail은 메뉴판 개정 주기로 끈끈(sticky) → 단기 미반영이 "전가 없음"은 아님(끝점 민감도 주의).
+- **구성효과:** CPI '외식 커피'엔 원두커피 외 메뉴·매장유형 믹스가 섞임 → 100% 생두 전가로 못 읽음.
+- API/수집 경로 미확정: KOSIS는 OpenAPI(인증키) 또는 수기 CSV 다운로드 — Day 3 import 때처럼 먼저 `--debug`로 스펙 확인.
+
+**Next action (Day 9 실행):** KOSIS에서 'CPI 외식 커피' 시리즈 식별 → 수집 경로(API vs 수기) 확정 → `scripts/fetch_cpi_coffee.py`(또는 수기 CSV) + `data/raw/`에 적재 → 수입 원화원가 대비 인덱스 비교 차트 → §6 1문장 evidence化.
+
+---
