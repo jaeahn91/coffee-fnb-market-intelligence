@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Auto-fire the data harness before every commit.
+#
+# Git hooks live in .git/hooks/ (not version-controlled), so this tracked copy
+# is the source of truth. Install it on a fresh clone with:
+#   ln -sf ../../scripts/hooks/pre-commit .git/hooks/pre-commit
+#
+# Bypass intentionally (rarely) with:  git commit --no-verify
+set -e
+
+PY=".venv/bin/python"
+[ -x "$PY" ] || PY="python3"
+
+echo "[pre-commit] Tier 1 — data integrity..."
+"$PY" scripts/validate_data.py
+
+echo "[pre-commit] Tier 2 — golden figures..."
+"$PY" scripts/check_figures.py
+
+echo "[pre-commit] harness clean."
