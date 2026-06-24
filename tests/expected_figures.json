@@ -1,0 +1,80 @@
+{
+  "import_unitprice_2024_01": {
+    "value": 3.881,
+    "data_cut": "2024-01",
+    "tol": 0.01,
+    "desc": "수입 평균단가 $/kg @2024-01"
+  },
+  "import_unitprice_2026_03": {
+    "value": 7.398,
+    "data_cut": "2026-03",
+    "tol": 0.01,
+    "desc": "수입 평균단가 $/kg @2026-03"
+  },
+  "import_krw_2024_01": {
+    "value": 5150.4751,
+    "data_cut": "2024-01",
+    "tol": 1.0,
+    "desc": "원화 수입원가 원/kg @2024-01"
+  },
+  "import_krw_2026_03": {
+    "value": 11029.5302,
+    "data_cut": "2026-03",
+    "tol": 1.0,
+    "desc": "원화 수입원가 원/kg @2026-03"
+  },
+  "krw_cost_peak_to_cut_pct": {
+    "value": -0.4249,
+    "data_cut": "2026-03",
+    "tol": 0.2,
+    "desc": "FX 상쇄: 원가 변화 % (2025-05 정점->2026-03)"
+  },
+  "corr_level_arabica": {
+    "value": 0.8678,
+    "data_cut": "2026-03",
+    "tol": 0.01,
+    "desc": "수입단가 vs 아라비카 레벨 상관"
+  },
+  "corr_level_robusta": {
+    "value": 0.2587,
+    "data_cut": "2026-03",
+    "tol": 0.01,
+    "desc": "수입단가 vs 로부스타 레벨 상관"
+  },
+  "price_contribution_pct": {
+    "value": 84.718,
+    "data_cut": "2026-03",
+    "tol": 1.0,
+    "desc": "원가 변동 중 가격 기여 %"
+  },
+  "fx_contribution_pct": {
+    "value": 15.282,
+    "data_cut": "2026-03",
+    "tol": 1.0,
+    "desc": "원가 변동 중 환율 기여 %"
+  },
+  "import_ton_2024_avg": {
+    "value": 14111.9167,
+    "data_cut": "2024-12",
+    "tol": 1.0,
+    "desc": "월평균 수입 톤 (2024)"
+  },
+  "import_ton_2025_avg": {
+    "value": 13951.7667,
+    "data_cut": "2025-12",
+    "tol": 1.0,
+    "desc": "월평균 수입 톤 (2025)"
+  },
+  "import_ton_2026_to_apr_avg": {
+    "value": 12010.925,
+    "data_cut": "2026-04",
+    "tol": 1.0,
+    "desc": "월평균 수입 톤 (2026-01~04)"
+  },
+  "et_premium_2026_04": {
+    "value": 1.067,
+    "data_cut": "2026-04",
+    "tol": 0.02,
+    "desc": "에티오피아 단가 프리미엄 $/kg @2026-04"
+  }
+}
