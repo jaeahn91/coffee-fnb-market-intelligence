@@ -20,6 +20,12 @@ import math
 from pathlib import Path
 import pandas as pd
 
+# Windows consoles default to cp949; force UTF-8 so Korean / em-dash print without crashing.
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except (AttributeError, ValueError):
+    pass
+
 PROC = Path("data/processed")
 RAW = Path("data/raw")
 GOLDEN = Path("tests/expected_figures.json")

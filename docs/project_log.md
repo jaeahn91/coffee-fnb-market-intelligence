@@ -230,3 +230,31 @@
 **Next action (Day 9 실행):** KOSIS에서 'CPI 외식 커피' 시리즈 식별 → 수집 경로(API vs 수기) 확정 → `scripts/fetch_cpi_coffee.py`(또는 수기 CSV) + `data/raw/`에 적재 → 수입 원화원가 대비 인덱스 비교 차트 → §6 1문장 evidence化.
 
 ---
+
+## Day 9 — Domestic F&B 1차 Data 수집·검증 (CPI 커피 → §6 evidence)
+
+**Goal:** Day 8 plan 실행. KOSIS CPI 커피 시계열을 적재하고 수입 원화원가 대비 전가 정도를 데이터로 확인.
+
+**Completed (수집 경로 확정):**
+- **Keyless 경로 없음 확인:** KOSIS 웹 통계표(`statHtml.do`)는 SSO 로그인으로 리다이렉트, OpenAPI는 키 없이 `err=10 인증 KEY 누락`. → 인증키 필수. 사용자가 kosis.kr 인증키 발급 → `.env`의 `KOSIS_API_KEY`. (초기 `.env.txt` 저장 → `.env`로 리네임: 메모장 확장자 이슈.)
+- **API 스펙 확정 (probe-first, Day 3 방식):** 표 `DT_1J22112` = 소비자물가지수(**시도 C1 × 품목 C2**). 파라미터 방식(`statisticsParameterData.do`)은 `objL`를 명시해야 함 — `objL1=T10`(전국)+`objL2=ALL` 조합에서 정상. 커피 품목코드 **`F01K01133` 커피(외식)** / **`B01A02101` 커피(가공식품)**, 항목 `T`=지수(2020=100).
+- `scripts/fetch_cpi_coffee.py` 작성 → `data/raw/korea_cpi_coffee_2024_2026.csv` (2품목 × 30개월 = 60행, 2024-01~2026-06, 결측 0). `source_tracker.csv` domestic KOSIS 행 → done.
+
+**Completed (환경):** 이 머신에 Python 부재 → winget으로 3.12.10 설치 + `.venv` 생성 + requirements 설치(requests/pandas/dotenv/matplotlib).
+
+**Key insight (→ §6 evidence):**
+- **상류에서 하류로 전가가 감쇠한다.** 2024-01→2026-03: 수입 원화 원가 **+114%(≈2배)** → 커피 가공식품(원두 소매) **+15.8%** → 커피 외식(한 잔) **+4.4%**(2026-06까지 동일).
+- +4.4%는 §6.1 잔당 산식이 예측한 폭(생두 비중 2~7% × 전가 → +2~8%) 안에 들어 메커니즘과 **정량적으로 부합** — "생두값 2배 ≠ 판매가 2배" 데이터로 확인.
+- 외식 CPI는 2025 H1에 1회성 계단(+4%p) 뒤 평탄(2025-07~12 여섯 달 111.43 동일) → 메뉴가 경직성·6~12개월 시차의 전형.
+- **Non-overstatement:** 외식 CPI는 집계지수(매장유형·비생두 원가 혼합)라 순수 생두 전가율·마진흡수 입증 아님. 저가/프리미엄 구간 분해 불가(§5 교훈 재연) → 프랜차이즈 실판매가는 잔여 과제.
+- 근거 노트 `docs/domestic_passthrough_cpi_2026.md` (발행준비 §6.5 문단 포함), 차트 `reports/figures/07_import_cost_vs_cpi_coffee.png` (`scripts/plot_cost_vs_cpi.py`).
+
+**Housekeeping (하네스):**
+- 새 CPI 파일을 Tier-1 무결성 가드(`validate_data.py`)에 편입 → PASS. Tier-2 골든 13개 불변(PASS) — CPI 추가가 기존 수치 무영향 확인.
+- **크로스플랫폼 버그 fix:** `check_figures.py`·`validate_data.py`가 최종 `print("PASS —")`의 em대시를 cp949 콘솔에 출력하다 크래시(exit 1) → `sys.stdout.reconfigure(encoding="utf-8")` 추가. 검사 로직·골든값 불변. (macOS 개발 → Windows 실행 격차.)
+
+**v0 freeze 존중:** v0 리포트(2026 5월호) 본문은 수정하지 않음. CPI 증거는 노트에 **발행준비 상태**로 두고, v1 발행 시 §6.5로 접붙임 (CHANGELOG 버전 규율).
+
+**Next action (v1 잔여):** (1) 프랜차이즈 구간별 실판매가 → §6.2 양극단 비대칭 검증; (2) (선택) ICO I-CIP + 한국은행 고시환율 교차검증; (3) v1 발행 시 processed/notebook 재생성 + `check_figures.py --update`. **미결정(사용자):** CPI 증거를 지금 v1 리포트 초안으로 착수할지, 노트에 대기시킬지. **커밋 시 주의:** pre-commit 훅이 `.venv/bin/python`(Unix 경로) 참조 → Windows에선 `.venv/Scripts/python.exe` 미스매치로 훅이 python을 못 찾음. 커밋하려면 훅 크로스플랫폼화 or `--no-verify`(단, 하네스는 위에서 수동 green 확인).
+
+---

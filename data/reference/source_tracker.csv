@@ -5,3 +5,4 @@ price,International Coffee Organization,ICO Composite Indicator Price (I-CIP) an
 fx,Bank of Korea ECOS,USD/KRW exchange rate,daily/monthly,API or manual download,BOK ECOS Open API,pending
 origin_risk,ICO/Reuters/industry news,Origin and supply risk,weekly/monthly,manual research,Brazil Vietnam Colombia Ethiopia weather/export/logistics issues,pending
 domestic,KATI/F&B news,Korean coffee and F&B market trend,monthly,manual research,KATI and industry news,pending
+domestic,KOSIS (통계청 소비자물가지수),CPI 커피(외식) F01K01133 · 커피(가공식품) B01A02101 (전국 월별 지수),monthly,API (kosis.kr OpenAPI),statisticsParameterData.do tblId=DT_1J22112 objL1=T10 objL2=ALL; 2020=100; .env KOSIS_API_KEY,done

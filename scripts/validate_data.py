@@ -14,6 +14,12 @@ import sys
 from pathlib import Path
 import pandas as pd
 
+# Windows consoles default to cp949; force UTF-8 so Korean / em-dash print without crashing.
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except (AttributeError, ValueError):
+    pass
+
 RAW = Path("data/raw")
 
 
@@ -48,6 +54,13 @@ CHECKS = [
         "non_null": ["year_month", "usdkrw_avg"],
         "non_neg": ["usdkrw_avg", "n_obs"],
         "start": None,  # fx series starts 2023-12; just require contiguity
+    },
+    {
+        "file": "korea_cpi_coffee_2024_2026.csv",
+        "keys": ["year_month", "item_code"],  # 2 품목 (외식/가공식품) × months
+        "non_null": ["year_month", "item_code", "value"],
+        "non_neg": ["value"],
+        "start": "2024-01",
     },
 ]
 
